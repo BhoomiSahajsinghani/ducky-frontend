@@ -1,26 +1,669 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;700&display=swap');
 @import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
+    --hue: 223;
+    --bg: hsl(var(--hue), 90%, 90%);
+    --fg: hsl(var(--hue), 90%, 10%);
+    --primary: hsl(var(--hue), 90%, 50%);
+    --trans-dur: 0.3s;
+    --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+     :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient( -45deg, #ff8c00, #ffa500, #ffd700, #ff8c00, #ff4500, #ff6347);
+    background-size: 200% 200%;
+    animation: gradient-move 5s ease infinite;
+    color: var(--foreground);
+    font-family: 'Cabin', Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+}
+
+@keyframes gentle-breath {
+    0% {
+        opacity: 0.6;
+        transform: scale(0.98);
+        filter: blur(100px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.01);
+        filter: blur(110px);
+    }
+    100% {
+        opacity: 0.6;
+        transform: scale(0.98);
+        filter: blur(100px);
+    }
+}
+
+.blur-animation {
+    position: fixed;
+    bottom: -600px;
+    right: -600px;
+    width: 2000px;
+    height: 2000px;
+    border-radius: 50%;
+    background: radial-gradient( circle at center, #d6882e 0%, rgba(255, 138, 0, 0.6) 25%, rgba(249, 201, 79, 0.4) 50%, rgba(255, 138, 0, 0.2) 75%, transparent 90%);
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+    transform-origin: center;
+}
+
+
+/* Add a second blur for more subtle effect */
+
+.blur-animation::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient( circle at center, rgba(255, 138, 0, 0.3) 0%, rgba(249, 201, 79, 0.2) 45%, transparent 90%);
+    filter: blur(90px);
+    z-index: -1;
+    border-radius: 50%;
+    transform-origin: center;
+}
+
+
+/* Brutalist Input Styles */
+
+.contact {
+    display: flex;
+    margin: auto;
+    position: relative;
+    width: 100%;
+    transform: translate(0, 0);
+    border-radius: 0;
+    overflow: visible;
+    border: 2px solid #ff8c00;
+    background: white;
+    box-shadow: 6px 6px 0 #ff8c00;
+}
+
+.contact__field {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.contact__input {
+    background-color: transparent;
+    opacity: 1;
+    padding: 0.5em 1em;
+    padding-right: 60px;
+    /* Make room for the button */
+    border-radius: 0;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    font-size: 1.1em;
+    font-weight: 500;
+    height: 60px;
+    line-height: 1;
+    margin: 0;
+}
+
+.contact__submit {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff8c00;
+    border: none;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: transform 0.1s ease;
+}
+
+.contact__submit:hover {
+    transform: translateY(-50%) translate(-2px, 2px);
+}
+
+.contact__submit:active {
+    transform: translateY(-50%) translate(-4px, 4px);
+}
+
+.contact__input::placeholder {
+    color: #8B4513;
+    opacity: 0.8;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.15em;
+}
+
+.contact:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0 #ff8c00;
+    transition: all 0.1s ease;
+}
+
+.contact:has(.contact__input:focus) {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 #ff8c00;
+    transition: all 0.1s ease;
+}
+
+.contact__input:focus {
+    outline: none;
+}
+
+.contact__btn {
+    border-radius: 0;
+    background: #ff8c00;
+    border: 2px solid #ff8c00;
+}
+
+.contact__feedback {
+    border-radius: 0;
+}
+
+.contact__input:focus-visible~.contact__btn {
+    transform: translateX(100%);
+}
+
+.contact__label,
+.contact__placeholder {
+    position: absolute;
+    transition: opacity var(--trans-dur) var(--trans-timing), transform var(--trans-dur) var(--trans-timing);
+}
+
+.contact__label {
+    display: block;
+    font-size: 0.5em;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0;
+    top: 0.75rem;
+    left: 1rem;
+    text-transform: uppercase;
+    transform: translateY(100%);
+}
+
+.contact[data-state="0"] .contact__input {
+    transition-duration: 0s, var(--trans-dur), var(--trans-dur);
+}
+
+.contact[data-state="0"] .contact__icon-group {
+    transition-delay: var(--trans-dur);
+}
+
+.contact[data-state="1"] .contact__icon-group {
+    transform: translateX(64px);
+}
+
+.contact[data-state="2"] .contact__feedback {
+    transform: translateX(0);
+    transition-delay: var(--trans-dur);
+}
+
+.contact[data-state="2"] .contact__icon-group {
+    transform: translateX(128px);
+    transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1.65);
+}
+
+.contact[data-state="1"] .contact__btn,
+.contact[data-state="2"] .contact__btn,
+.contact:has(.contact__input[aria-invalid="false"]) .contact__btn {
+    transform: translateX(0);
+}
+
+.contact[data-state="1"] .contact__btn,
+.contact[data-state="2"] .contact__btn {
+    &:disabled {
+        background-color: hsl(0, 0%, 100%);
+    }
+}
+
+.contact[data-state="2"] .contact__label,
+.contact[data-state="2"] .contact__placeholder {
+    transition-delay: calc(var(--trans-dur) * 2);
+}
+
+.contact:has(.contact__input:focus-visible),
+.contact:not([data-state="2"]):has(.contact__input:not(:placeholder-shown)) {
+    transform: translate(0, 0);
+}
+
+.contact:has(.contact__input:focus-visible):before,
+.contact:has(.contact__input:focus-visible):after {
+    transform: translate(6px, 6px);
+    transition: transform 0.2s ease;
+}
+
+
+/* Animations */
+
+@keyframes spin {
+    from {
+        transform: translate(-64px, 0) rotate(0);
+    }
+    to {
+        transform: translate(-64px, 0) rotate(-1turn);
+    }
+}
+
+
+/* Tasks List Styles */
+
+.tasks-list {
+    margin-top: 2rem;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white;
+    border: 2px solid #ff8c00;
+    box-shadow: 4px 4px 0 #ff8c00;
+    transform: translate(0, 0);
+    transition: all 0.1s ease;
+}
+
+.task-item:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #ff8c00;
+}
+
+.task-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ff8c00;
+    margin-right: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.1s ease;
+}
+
+.task-checkbox:checked {
+    background: #ff8c00;
+}
+
+.task-checkbox:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.task-label {
+    font-size: 1.1em;
+    color: #8B4513;
+    font-weight: 500;
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.task-delete {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background: white;
+    border: 2px solid #ff8c00;
+    color: #ff8c00;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s ease;
+    margin-left: 1rem;
+}
+
+.task-delete:hover {
+    background: #ff8c00;
+    color: white;
+    transform: translate(2px, 2px);
+}
+
+.task-delete:active {
+    transform: translate(4px, 4px);
+}
+
+.task-checkbox:checked+.task-label {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+
+/* Navigation Styles */
+
+.nav-link {
+    color: #8B4513;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.1s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: #ff8c00;
+}
+
+.nav-link.active {
+    color: #ff8c00;
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff8c00;
+}
+
+
+/* Cool UI Effects and Animations */
+
+
+/* Shake animation for delete button */
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-2px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(2px);
+    }
+}
+
+
+/* Pulse animation for the submit button */
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 140, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 140, 0, 0);
+    }
+}
+
+
+/* Enhanced task item hover effect */
+
+.task-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white;
+    border: 2px solid #ff8c00;
+    box-shadow: 4px 4px 0 #ff8c00;
+    transform: translate(0, 0);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.task-item:hover {
+    transform: translate(2px, 2px) scale(1.01);
+    box-shadow: 2px 2px 0 #ff8c00;
+}
+
+.task-item:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( 90deg, transparent, rgba(255, 140, 0, 0.1), transparent);
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+
+/* Enhanced delete button */
+
+.task-delete {
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background: white;
+    border: 2px solid #ff8c00;
+    color: #ff8c00;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.task-delete:hover {
+    background: #ff8c00;
+    color: white;
+    transform: translate(2px, 2px);
+    animation: shake 0.5s ease-in-out;
+}
+
+.task-delete:active {
+    transform: translate(4px, 4px);
+}
+
+
+/* Enhanced submit button */
+
+.contact__submit {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff8c00;
+    border: none;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: pulse 2s infinite;
+}
+
+.contact__submit:hover {
+    transform: translateY(-50%) translate(-2px, 2px) scale(1.05);
+    background: #e67e00;
+}
+
+.contact__submit:active {
+    transform: translateY(-50%) translate(-4px, 4px) scale(0.95);
+}
+
+
+/* Enhanced checkbox */
+
+.task-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ff8c00;
+    margin-right: 1rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: white;
+}
+
+.task-checkbox:checked {
+    background: #ff8c00;
+    transform: scale(1.1);
+}
+
+.task-checkbox:checked::after {
+    content: "✓";
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes pop {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+
+/* Enhanced input focus effect */
+
+.contact:has(.contact__input:focus) {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 #ff8c00;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-color: #e67e00;
+}
+
+.contact:has(.contact__input:focus)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid transparent;
+    box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.3);
+    animation: focus-ring 1.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes focus-ring {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+}
+
+
+/* Enhanced navigation links */
+
+.nav-link {
+    color: #8B4513;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 0.25rem 0.5rem;
+}
+
+.nav-link:hover {
+    color: #ff8c00;
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    color: #ff8c00;
+    font-weight: 600;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff8c00;
+    animation: expand 0.3s ease-out;
+}
+
+@keyframes expand {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+
+/* Soothing moving gradient animation */
+
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
