@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="250" height="250" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main body -->
+  <circle cx="125" cy="125" r="100" fill="#FFE55C"/>
+  
+  <!-- Face -->
+  <path d="M100 140 Q125 160 150 140" stroke="black" stroke-width="3" fill="none"/>
+  <circle cx="90" cy="100" r="8" fill="black"/>
+  <circle cx="160" cy="100" r="8" fill="black"/>
+  
+  <!-- Blue bird -->
+  <g transform="translate(160, 60) rotate(-15)">
+    <path d="M0 0 Q10 -10 20 0 Q30 10 40 0" fill="#4A90E2" />
+    <circle cx="40" cy="0" r="8" fill="#4A90E2"/>
+    <circle cx="42" cy="-2" r="3" fill="white"/>
+  </g>
+  
+  <!-- Pink flowers -->
+  <g transform="translate(50, 180)">
+    <circle cx="0" cy="0" r="6" fill="#FFB6C1"/>
+    <circle cx="2" cy="2" r="3" fill="#FF69B4"/>
+  </g>
+  <g transform="translate(190, 170)">
+    <circle cx="0" cy="0" r="6" fill="#FFB6C1"/>
+    <circle cx="2" cy="2" r="3" fill="#FF69B4"/>
+  </g>
+  <g transform="translate(160, 200)">
+    <circle cx="0" cy="0" r="6" fill="#FFB6C1"/>
+    <circle cx="2" cy="2" r="3" fill="#FF69B4"/>
+  </g>
+</svg> 
